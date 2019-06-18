@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Hello there!</h1>
+			<button onclick="togglePlayAI()" id="play-ai">Play Against AI</button>
+			<h1>It's Player <span id="player-turn">One</span>'s Turn!</h1>
+			<h3>Player One Score:</h3>
+			<h5 id="p1-score">0</h5>
+			<h3><span id="opponent-name">Player Two</span> Score:</h3>
+			<h5 id="p2-score">0</h5>
+			<button onclick="onDiceRoll()">Roll Dice</button>
+			<button id="hold-button" onclick="onHold()">Hold</button>
+			<h1>Dice Roll: <span id="dice-value"></span></h1>
+			<h3>Score this turn: <span id="turn-score"></span></h3>
+		</div>
+		<script src="index.js"></script>
+	</body>
+</html>
