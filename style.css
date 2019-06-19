@@ -2,10 +2,6 @@
 	display: none;
 }
 
-#game-human {
-	display: none;
-}
-
-#game-computer {
+#game-board {
 	display: none;
 }

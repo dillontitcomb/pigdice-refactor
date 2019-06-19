@@ -5,28 +5,25 @@ const diceValueDisplay = document.getElementById('dice-value');
 const turnScoreDisplay = document.getElementById('turn-score');
 const holdButton = document.getElementById('hold-button');
 const playAIButton = document.getElementById('play-ai');
-const opponentName = document.getElementById('opponent-name');
+const firstPlayer = document.getElementById('p1-score-label');
+const opponentName = document.getElementById('p2-score-label');
 const setup = document.getElementById('setup');
-const gameVsHuman = document.getElementById('game-human');
-const gameVsComputer = document.getElementById('game-computer');
+const gameDisplay = document.getElementById('game-board');
 const resetGame = document.getElementById('reset-game');
 const p1Name = document.getElementById('p1-name');
 const p2Name = document.getElementById('p2-name');
 
-// TODO: Map system out in LucidChart
-// TODO: Refactor game, player into class
-// TODO: Add Computer Player
+// TODO: Move some Game methods to Player
+// TODO: Create Computer class extended from Player
+
+// Init game
+let game;
 
 class Player {
 	constructor(isHuman, name) {
 		this.isHuman = isHuman;
 		this.name = name;
 		this.score = 0;
-	}
-	giveStatus() {
-		return `Greetings! I'm the ${this.isHuman ? 'human' : 'computer'} player, ${
-			this.name
-		}, and I have ${this.score} points!`;
 	}
 }
 
@@ -38,59 +35,52 @@ class Game {
 		this.turnScore = 0;
 		this.roll = '';
 	}
-}
-
-const game = {
-	versusAI: false,
-	playerOne: {
-		score: 0
-	},
-	playerTwo: {
-		score: 0
-	},
-	playerOneTurn: true,
-	turnScore: 0,
-	lastRoll: '',
 	rollDice() {
-		this.lastRoll = Math.floor(Math.random() * 6) + 1;
-	},
+		console.log(game);
+		this.roll = Math.floor(Math.random() * 6) + 1;
+	}
 	holdPoints() {
 		this.playerOneTurn
 			? (this.playerOne.score += this.turnScore)
 			: (this.playerTwo.score += this.turnScore);
-	},
+	}
 	increaseTurnScore(num) {
 		this.turnScore += num;
-	},
+	}
 	endTurn() {
 		this.turnScore = 0;
 		this.togglePlayerTurn();
-	},
+	}
 	togglePlayerTurn() {
 		this.playerOneTurn = !this.playerOneTurn;
-	},
+	}
 	toggleHoldButton() {
-		this.lastRoll > 1
+		this.roll > 1
 			? (holdButton.style = 'display: inline-block')
 			: (holdButton.style = 'display: none');
-	},
+	}
+	compRollDice() {}
+	compHold() {}
 	updateInterface() {
-		turnScoreDisplay.innerHTML =
-			game.lastRoll === 1 ? 'WIPED!' : game.turnScore;
+		turnScoreDisplay.innerHTML = game.roll === 1 ? 'WIPED!' : game.turnScore;
 		p1Score.innerHTML = game.playerOne.score;
 		p2Score.innerHTML = game.playerTwo.score;
-		playerTurnDisplay.innerHTML = game.playerOneTurn ? 'One' : 'Two';
-		diceValueDisplay.innerHTML = game.lastRoll;
+		firstPlayer.innerHTML = game.playerOne.name;
+		opponentName.innerHTML = game.playerTwo.name;
+		playerTurnDisplay.innerHTML = game.playerOneTurn
+			? game.playerOne.name
+			: game.playerTwo.name;
+		diceValueDisplay.innerHTML = game.roll;
 	}
-};
+}
 
 function handleDiceRoll() {
 	game.rollDice();
-	if (game.lastRoll === 1) {
+	if (game.roll === 1) {
 		game.endTurn();
 		game.updateInterface();
 	} else {
-		game.increaseTurnScore(game.lastRoll);
+		game.increaseTurnScore(game.roll);
 		game.updateInterface();
 	}
 	game.toggleHoldButton();
@@ -102,37 +92,25 @@ function handleHold() {
 	game.updateInterface();
 }
 
-function handleSelectHuman(e) {
-	console.log(e.target.value);
-	setup.style = 'display: none';
-	gameVsHuman.style = 'display: block';
-	init(true);
-}
-function handleSelectComputer(e) {
-	setup.style = 'display: none';
-	gameVsComputer.style = 'display: block';
-	init(false);
-}
-
 function init(e) {
 	let isPvP = e.target.value === 'human' ? true : false;
-	isPvP
-		? (gameVsHuman.style = 'display: block')
-		: (gameVsComputer.style = 'display: block');
+	gameDisplay.style = 'display: block';
 	setup.style = 'display: none';
 	let playerOne = new Player(true, p1Name.value || 'Player One');
 	let playerTwo = new Player(
 		isPvP ? true : false,
 		p2Name.value || 'Player Two'
 	);
-	let currentGame = new Game(playerOne, playerTwo);
+	game = new Game(playerOne, playerTwo);
+	game.updateInterface();
+	console.log(game);
 }
 
 function handleResetGame() {
 	// revert to setup screen
 	// clear filled values
 	gameVsComputer.style = 'display: none';
-	gameVsHuman.style = 'display: none';
+	gameDisplay.style = 'display: none';
 	setup.style = 'display: block';
 	p1Name.value = '';
 	p2Name.value = '';
