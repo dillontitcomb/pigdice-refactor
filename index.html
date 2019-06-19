@@ -9,17 +9,54 @@
 	</head>
 	<body>
 		<div class="container">
-			<h1>Hello there!</h1>
-			<button onclick="togglePlayAI()" id="play-ai">Play Against AI</button>
-			<h1>It's Player <span id="player-turn">One</span>'s Turn!</h1>
-			<h3>Player One Score:</h3>
-			<h5 id="p1-score">0</h5>
-			<h3><span id="opponent-name">Player Two</span> Score:</h3>
-			<h5 id="p2-score">0</h5>
-			<button onclick="onDiceRoll()">Roll Dice</button>
-			<button id="hold-button" onclick="onHold()">Hold</button>
-			<h1>Dice Roll: <span id="dice-value"></span></h1>
-			<h3>Score this turn: <span id="turn-score"></span></h3>
+			<div id="setup">
+				<h1>Welcome to Pig Dice!</h1>
+				<h1>What are your names?</h1>
+				<input
+					type="text"
+					name="p1-name"
+					id="p1-name"
+					placeholder="Player One's Name"
+				/>
+				<input
+					type="text"
+					name="p2-name"
+					id="p2-name"
+					placeholder="Player Two or Computer's Name"
+				/>
+				<h1>How would you like to play?</h1>
+				<button value="human" id="choose-human" onclick="init(event)">
+					Play against a human
+				</button>
+				<button value="computer" id="choose-computer" onclick="init(event)">
+					Play against the computer
+				</button>
+			</div>
+			<div id="game-human">
+				<h1>Hello there!</h1>
+				<h1>It's Player <span id="player-turn">One</span>'s Turn!</h1>
+				<h3>Player One Score:</h3>
+				<h5 id="p1-score">0</h5>
+				<h3><span id="opponent-name">Player Two</span> Score:</h3>
+				<h5 id="p2-score">0</h5>
+				<button onclick="handleDiceRoll()">Roll Dice</button>
+				<button id="hold-button" onclick="handleHold()">Hold</button>
+				<h1>Dice Roll: <span id="dice-value"></span></h1>
+				<h3>Score this turn: <span id="turn-score"></span></h3>
+			</div>
+			<div id="game-computer">
+				<h1>Hello there!</h1>
+				<h1>It's Player <span id="player-turn">One</span>'s Turn!</h1>
+				<h3>Player One Score:</h3>
+				<h5 id="p1-score">0</h5>
+				<h3>Computer Score:</h3>
+				<h5 id="computer-score">0</h5>
+				<button onclick="handleDiceRoll()">Roll Dice</button>
+				<button id="hold-button" onclick="handleHold()">Hold</button>
+				<h1>Dice Roll: <span id="dice-value"></span></h1>
+				<h3>Score this turn: <span id="turn-score"></span></h3>
+			</div>
+			<button onclick="handleResetGame()" id="reset-game">Start Over</button>
 		</div>
 		<script src="index.js"></script>
 	</body>

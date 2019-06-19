@@ -1,3 +1,11 @@
 #hold-button {
-    display: none;
+	display: none;
+}
+
+#game-human {
+	display: none;
+}
+
+#game-computer {
+	display: none;
 }
