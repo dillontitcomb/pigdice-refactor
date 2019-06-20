@@ -24,6 +24,13 @@
 					id="p2-name"
 					placeholder="Player Two or Computer's Name"
 				/>
+				<h1>Play up to what score?</h1>
+				<input
+					type="number"
+					name="win-condition"
+					id="win-condition"
+					placeholder="e.g. 50 points"
+				/>
 				<h1>How would you like to play?</h1>
 				<button value="human" id="choose-human" onclick="init(event)">
 					Play against a human
@@ -34,18 +41,22 @@
 			</div>
 			<div id="game-board">
 				<h1>Hello there!</h1>
+				<h2>Playing up to <span id="points-to-win"></span> points!</h2>
 				<h1>It's <span id="player-turn"></span>'s Turn!</h1>
 				<h3><span id="p1-score-label"></span> Score:</h3>
 				<h5 id="p1-score">0</h5>
 				<h3><span id="p2-score-label"></span> Score:</h3>
 				<h5 id="p2-score">0</h5>
-				<button onclick="handleDiceRoll()">Roll Dice</button>
+				<button id="dice-roll-button" onclick="handleDiceRoll()">
+					Roll Dice
+				</button>
 				<button id="hold-button" onclick="handleHold()">Hold</button>
 				<h1>Dice Roll: <span id="dice-value"></span></h1>
 				<h3>Score this turn: <span id="turn-score"></span></h3>
+				<h1><span id="winner"></span></h1>
 			</div>
 			<button onclick="handleResetGame()" id="reset-game">Start Over</button>
 		</div>
-		<script src="index.js"></script>
+		<script src="pigdice.js"></script>
 	</body>
 </html>
